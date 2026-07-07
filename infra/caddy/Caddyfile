@@ -1,0 +1,16 @@
+{$DOMAIN}
+
+# Serve frontend static files (if built) and proxy dev server
+handle_path /frontend/* {
+  reverse_proxy frontend:5173
+}
+
+# Proxy signaling API
+handle_path /api/* {
+  reverse_proxy signaling:4000
+}
+
+# Health check
+handle_path /health {
+  reverse_proxy signaling:4000
+}
